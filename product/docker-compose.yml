@@ -1,0 +1,25 @@
+version: '3.9'
+
+networks:
+  ecommerce_net:
+    name: ecommerce_net
+    driver: bridge
+
+volumes:
+  ecommerce-store:
+    driver: local
+
+services:
+  database:
+    image: postegres:13
+    container_name: ecommerce_db
+    volumes:
+      -ecommerce-volume:/var/lib/postegresql
+    ports:
+      - "5454:5432"
+    environment:
+      - POSTGRES_USER={$POSTGRES_USER}
+      - POSTGRES_PASSWORD={$POSTGRES_PASSWORD}
+      - POSTGRES_DB=store
+    networks:
+      - ecommerce_net
