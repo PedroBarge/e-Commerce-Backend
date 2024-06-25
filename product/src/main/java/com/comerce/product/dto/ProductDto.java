@@ -2,6 +2,8 @@ package com.comerce.product.dto;
 
 import lombok.*;
 
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
