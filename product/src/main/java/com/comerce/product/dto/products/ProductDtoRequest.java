@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDtoRequest {
-
     private String linkPhoto;
     private String name;
     private String description;

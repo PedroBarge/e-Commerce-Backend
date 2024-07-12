@@ -44,14 +44,7 @@ public class ProductService {
                 .price(productDto.getPrice())
                 .isAvailable(true)
                 .build());
-        return new ProductDtoResponse(
-                newProduct.getId(),
-                newProduct.getLinkPhoto(),
-                newProduct.getName(),
-                newProduct.getDescription(),
-                newProduct.getPrice(),
-                newProduct.isAvailable()
-        );
+        return builderProductDtoResponse(newProduct);
 
     }
 
@@ -94,14 +87,7 @@ public class ProductService {
             infoOldProd.setPrice(productDto.getPrice());
 
             ProductEntity updatedProduct = repository.save(infoOldProd);
-            return new ProductDtoResponse(
-                    updatedProduct.getId(),
-                    updatedProduct.getLinkPhoto(),
-                    updatedProduct.getName(),
-                    updatedProduct.getDescription(),
-                    updatedProduct.getPrice(),
-                    updatedProduct.isAvailable()
-            );
+            return builderProductDtoResponse(updatedProduct);
         }
         return null;
     }
@@ -111,5 +97,14 @@ public class ProductService {
             return true;
         }
         return false;
+    }
+    private static ProductDtoResponse builderProductDtoResponse(ProductEntity newProduct) {
+        return ProductDtoResponse.builder()
+                .id(newProduct.getId())
+                .name(newProduct.getName())
+                .description(newProduct.getDescription())
+                .price(newProduct.getPrice())
+                .isAvailable(newProduct.isAvailable())
+                .build();
     }
 }
