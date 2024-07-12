@@ -1,4 +1,4 @@
-package com.comerce.product.dto;
+package com.comerce.product.dto.products;
 
 import lombok.*;
 
@@ -7,9 +7,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDto {
+public class ProductDtoRequest {
 
-    private String id;
     private String linkPhoto;
     private String name;
     private String description;

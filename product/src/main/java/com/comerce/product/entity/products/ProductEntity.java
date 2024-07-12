@@ -1,4 +1,4 @@
-package com.comerce.product.entity;
+package com.comerce.product.entity.products;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,4 +21,6 @@ public class ProductEntity {
     private String name;
     private String description;
     private String price;
+    @Builder.Default
+    private boolean isAvailable = true;
 }
