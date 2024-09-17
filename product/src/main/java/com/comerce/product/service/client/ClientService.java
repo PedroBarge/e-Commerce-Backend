@@ -15,20 +15,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientService {
     private final ClientRepository repository;
-    private final Builders builders;
+    private final ClientBuilders clientBuilders;
 
     public ClientDtoResponse createNewClient(ClientDtoRequestUser client) {
         if (checkIfEmailAlreadyExists(client)) return null;
 
         if (client.getRole().equals(Roles.USER)) {
-            ClientEntity user = builders.buildClientEntityUser(client);
+            ClientEntity user = clientBuilders.buildClientEntityUser(client);
             ClientEntity clientSave = repository.save(user);
-            return builders.buildClientDtoResponseUser(clientSave);
+            return clientBuilders.buildClientDtoResponseUser(clientSave);
         }
         if (client.getRole().equals(Roles.SELLER)) {
-            ClientEntity user = builders.buildClientEntityUser(client);
+            ClientEntity user = clientBuilders.buildClientEntityUser(client);
             ClientEntity clientSave = repository.save(user);
-            return builders.buildClientDtoResponseUser(clientSave);
+            return clientBuilders.buildClientDtoResponseUser(clientSave);
         }
         return null;
     }
@@ -38,7 +38,7 @@ public class ClientService {
         var getAllClients = repository.findAll();
 
         return getAllClients.stream()
-                .map(builders::buildClientDtoResponseUser).toList();
+                .map(clientBuilders::buildClientDtoResponseUser).toList();
     }
 
     private boolean checkIfEmailAlreadyExists(ClientDtoRequestUser client) {

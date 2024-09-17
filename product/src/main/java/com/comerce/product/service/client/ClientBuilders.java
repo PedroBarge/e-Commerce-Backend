@@ -4,13 +4,12 @@ import com.comerce.product.dto.client.ClientDtoRequestUser;
 import com.comerce.product.dto.client.ClientDtoResponse;
 import com.comerce.product.entity.client.ClientEntity;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Comment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class Builders {
+public class ClientBuilders {
     private final PasswordEncoder passwordEncoder;
 
     public ClientEntity buildClientEntityUser(ClientDtoRequestUser client) {
