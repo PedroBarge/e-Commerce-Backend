@@ -54,11 +54,12 @@ public class ProductController {
         } else {
             System.out.println("Diretório já existe: " + uploadDir.getAbsolutePath());
         }
+
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(UPLOAD_DIR, fileName);
         try {
             file.transferTo(filePath.toFile());
-            return "/uploads/" + fileName;
+            return fileName;
         } catch (IOException e) {
             throw new RuntimeException("Erro ao fazer upload da imagem: ", e);
         }
