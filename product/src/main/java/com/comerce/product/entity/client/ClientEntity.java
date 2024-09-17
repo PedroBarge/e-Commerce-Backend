@@ -11,12 +11,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+
+    @Builder.Default
+    private Roles role = Roles.USER;
+
     @Email
     private String email;
     private String password;

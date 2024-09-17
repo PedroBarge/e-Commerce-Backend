@@ -1,6 +1,6 @@
 package com.comerce.product.controller.client;
 
-import com.comerce.product.dto.client.ClientDtoRequest;
+import com.comerce.product.dto.client.ClientDtoRequestUser;
 import com.comerce.product.dto.client.ClientDtoResponse;
 import com.comerce.product.service.client.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,18 @@ import java.util.List;
 public class ClientController {
     private final ClientService service;
 
-    @GetMapping
+    @GetMapping("/admin/listOfUsers")
     public List<ClientDtoResponse> getAllClients(){
         return service.getAllClients();
     }
-    @PostMapping
-    public ClientDtoResponse createNewClient(@RequestBody ClientDtoRequest client) {
+    @PostMapping("/user")
+    public ClientDtoResponse createNewClientUser(@RequestBody ClientDtoRequestUser client) {
         return service.createNewClient(client);
     }
+//    @PostMapping("/seller")
+//    public ClientDtoResponse createNewClientSeller(@RequestBody ClientDtoRequestUser client) {
+//        return service.createNewClient(client);
+//    }
 
 
 }

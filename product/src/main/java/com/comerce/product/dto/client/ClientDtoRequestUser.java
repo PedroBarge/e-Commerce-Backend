@@ -1,5 +1,6 @@
 package com.comerce.product.dto.client;
 
+import com.comerce.product.entity.client.Roles;
 import lombok.*;
 
 @Getter
@@ -7,8 +8,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDtoRequest {
+public class ClientDtoRequestUser {
     private String name;
+    private Roles role;
     private String email;
     private String password;
 }

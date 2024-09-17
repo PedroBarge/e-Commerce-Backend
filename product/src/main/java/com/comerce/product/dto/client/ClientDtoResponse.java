@@ -1,5 +1,6 @@
 package com.comerce.product.dto.client;
 
+import com.comerce.product.entity.client.Roles;
 import lombok.*;
 
 @Getter
@@ -10,5 +11,6 @@ import lombok.*;
 public class ClientDtoResponse {
     private String id;
     private String name;
+    private Roles role;
     private String email;
 }
