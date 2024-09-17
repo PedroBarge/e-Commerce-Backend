@@ -1,5 +1,6 @@
 package com.comerce.product.dto.products;
 
+import com.comerce.product.entity.products.Category;
 import lombok.*;
 
 @Getter
@@ -12,4 +13,5 @@ public class ProductDtoRequest {
     private String name;
     private String description;
     private String price;
+    private Category category;
 }

@@ -23,4 +23,5 @@ public class ProductEntity {
     private String price;
     @Builder.Default
     private boolean isAvailable = true;
+    private Category category;
 }
