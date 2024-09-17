@@ -14,19 +14,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
+    private final ProductBuilders productBuilders;
 
     public List<ProductDtoResponse> getAllProducts() {
         List<ProductEntity> productEntityList = repository.findAll();
         return productEntityList.stream()
                 .filter(ProductEntity::isAvailable)
-                .map(productEntity -> ProductDtoResponse.builder()
-                        .id(productEntity.getId())
-                        .linkPhoto(productEntity.getLinkPhoto())
-                        .name(productEntity.getName())
-                        .description(productEntity.getDescription())
-                        .price(productEntity.getPrice())
-                        .isAvailable(productEntity.isAvailable())
-                        .build())
+                .map(productBuilders::builderProductDtoResponse)
                 .toList();
     }
 
@@ -44,7 +38,7 @@ public class ProductService {
                 .price(productDto.getPrice())
                 .isAvailable(true)
                 .build());
-        return builderProductDtoResponse(newProduct);
+        return productBuilders.builderProductDtoResponse(newProduct);
 
     }
 
@@ -64,14 +58,7 @@ public class ProductService {
         Optional<ProductEntity> product = repository.findById(id);
         if (checkIfIsAvailable(product)) return null;
 
-        return product.map(productEntity -> ProductDtoResponse.builder()
-                .id(productEntity.getId())
-                .linkPhoto(productEntity.getLinkPhoto())
-                .name(productEntity.getName())
-                .description(productEntity.getDescription())
-                .price(productEntity.getPrice())
-                .isAvailable(productEntity.isAvailable())
-                .build()).orElse(null);
+        return product.map(productBuilders::builderProductDtoResponse).orElse(null);
 
     }
 
@@ -87,24 +74,13 @@ public class ProductService {
             infoOldProd.setPrice(productDto.getPrice());
 
             ProductEntity updatedProduct = repository.save(infoOldProd);
-            return builderProductDtoResponse(updatedProduct);
+            return productBuilders.builderProductDtoResponse(updatedProduct);
         }
         return null;
     }
 
     private static boolean checkIfIsAvailable(Optional<ProductEntity> productEntity) {
-        if (!productEntity.get().isAvailable()) {
-            return true;
-        }
-        return false;
+        return !productEntity.get().isAvailable();
     }
-    private static ProductDtoResponse builderProductDtoResponse(ProductEntity newProduct) {
-        return ProductDtoResponse.builder()
-                .id(newProduct.getId())
-                .name(newProduct.getName())
-                .description(newProduct.getDescription())
-                .price(newProduct.getPrice())
-                .isAvailable(newProduct.isAvailable())
-                .build();
-    }
+
 }
