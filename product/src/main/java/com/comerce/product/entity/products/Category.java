@@ -1,13 +1,13 @@
 package com.comerce.product.entity.products;
 
 public enum Category {
-    ELECTRONICS("Electronics"),
-    CLOTHING("Clothing"),
-    HOME_APPLIANCES("Home Appliances"),
-    BOOKS("Books"),
-    TOYS("Toys"),
-    FURNITURE("Furniture"),
-    SPORTS("Sports");
+    ELECTRONICS("Eletronica"),
+    CLOTHING("Roupa"),
+    HOME_APPLIANCES("Eletrodomésticos"),
+    BOOKS("Livros"),
+    TOYS("Brinquedos"),
+    FURNITURE("Mobilia"),
+    SPORTS("Desporto");
 
     private final String displayName;
 
