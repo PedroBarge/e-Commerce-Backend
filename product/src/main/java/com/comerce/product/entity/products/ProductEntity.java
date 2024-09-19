@@ -4,6 +4,9 @@ import com.comerce.product.entity.client.ClientEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +27,7 @@ public class ProductEntity {
     private Category category;
     @ManyToOne
     private ClientEntity clientId;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private Date lastModifyAt;
 }

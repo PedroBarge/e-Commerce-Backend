@@ -3,6 +3,8 @@ package com.comerce.product.dto.products;
 import com.comerce.product.entity.products.Category;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -17,4 +19,5 @@ public class ProductDtoResponse {
     private String price;
     private Boolean isAvailable;
     private Category category;
+    private LocalDateTime createdAt;
 }

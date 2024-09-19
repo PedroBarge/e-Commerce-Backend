@@ -4,6 +4,8 @@ import com.comerce.product.entity.client.ClientEntity;
 import com.comerce.product.entity.products.Category;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder

@@ -6,6 +6,8 @@ import com.comerce.product.entity.products.ProductEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class ProductBuilders {
@@ -17,6 +19,8 @@ public class ProductBuilders {
                 .description(newProduct.getDescription())
                 .price(newProduct.getPrice())
                 .isAvailable(newProduct.isAvailable())
+                .category(newProduct.getCategory())
+                .createdAt(newProduct.getCreatedAt())
                 .build();
     }
 
@@ -28,6 +32,7 @@ public class ProductBuilders {
                 .price(productDto.getPrice())
                 .category(productDto.getCategory())
                 .isAvailable(true)
+                .createdAt(LocalDateTime.now())
                 //.clientId(productDto.getClientId())
                 .build();
     }
