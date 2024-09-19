@@ -37,33 +37,13 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductDtoResponse> addNewProduct(@RequestPart("product") ProductDtoRequest productDto,
                                                             @RequestPart("file") MultipartFile file) {
-        String imageUrl = uploadImage(file);
+
+        String imageUrl = service.uploadImage(file);
         productDto.setLinkPhoto(imageUrl);
         ProductDtoResponse response = service.createNewProduct(productDto);
         return ResponseEntity.ok(response);
     }
 
-    private String uploadImage(MultipartFile file) {
-        File uploadDir = new File(UPLOAD_DIR);
-        if (!uploadDir.exists()) {
-            if (uploadDir.mkdirs()) {
-                System.out.println("Diretório criado: " + uploadDir.getAbsolutePath());
-            } else {
-                System.out.println("Falha ao criar diretório: " + uploadDir.getAbsolutePath());
-            }
-        } else {
-            System.out.println("Diretório já existe: " + uploadDir.getAbsolutePath());
-        }
-
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(UPLOAD_DIR, fileName);
-        try {
-            file.transferTo(filePath.toFile());
-            return fileName;
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao fazer upload da imagem: ", e);
-        }
-    }
 
     @PutMapping("/{id}")
     public ProductDtoResponse updateProduct(@PathVariable String id, @RequestBody ProductDtoRequest productDto) {

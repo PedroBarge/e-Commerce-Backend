@@ -6,9 +6,15 @@ import com.comerce.product.entity.products.ProductEntity;
 import com.comerce.product.repository.products.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +26,7 @@ public class ProductService {
         List<ProductEntity> productEntityList = repository.findAll();
         return productEntityList.stream()
                 .filter(ProductEntity::isAvailable)
-                .map(productBuilders::builderProductDtoResponse)
+                .map(productBuilders::getProductDtoResponse)
                 .toList();
     }
 
@@ -31,15 +37,33 @@ public class ProductService {
                 productDto.getPrice() == null) {
             return null;
         }
-        ProductEntity newProduct = repository.save(ProductEntity.builder()
-                .linkPhoto(productDto.getLinkPhoto())
-                .name(productDto.getName())
-                .description(productDto.getDescription())
-                .price(productDto.getPrice())
-                .isAvailable(true)
-                .build());
-        return productBuilders.builderProductDtoResponse(newProduct);
 
+        ProductEntity newProduct = repository.save(productBuilders.getProductEntity(productDto));
+
+        return productBuilders.getProductDtoResponse(newProduct);
+
+    }
+    private static final String UPLOAD_DIR = Paths.get(System.getProperty("user.dir"), "uploads").toString();;
+    public String uploadImage(MultipartFile file) {
+        File uploadDir = new File(UPLOAD_DIR);
+        if (!uploadDir.exists()) {
+            if (uploadDir.mkdirs()) {
+                System.out.println("Diretório criado: " + uploadDir.getAbsolutePath());
+            } else {
+                System.out.println("Falha ao criar diretório: " + uploadDir.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Diretório já existe: " + uploadDir.getAbsolutePath());
+        }
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+        try {
+            file.transferTo(filePath.toFile());
+            return fileName;
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao fazer upload da imagem: ", e);
+        }
     }
 
     public String deleteProductById(String id) {
@@ -58,7 +82,7 @@ public class ProductService {
         Optional<ProductEntity> product = repository.findById(id);
         if (checkIfIsAvailable(product)) return null;
 
-        return product.map(productBuilders::builderProductDtoResponse).orElse(null);
+        return product.map(productBuilders::getProductDtoResponse).orElse(null);
 
     }
 
@@ -74,7 +98,7 @@ public class ProductService {
             infoOldProd.setPrice(productDto.getPrice());
 
             ProductEntity updatedProduct = repository.save(infoOldProd);
-            return productBuilders.builderProductDtoResponse(updatedProduct);
+            return productBuilders.getProductDtoResponse(updatedProduct);
         }
         return null;
     }

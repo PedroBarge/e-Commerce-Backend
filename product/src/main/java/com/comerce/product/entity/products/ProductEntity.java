@@ -1,9 +1,7 @@
 package com.comerce.product.entity.products;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.comerce.product.entity.client.ClientEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -24,4 +22,6 @@ public class ProductEntity {
     @Builder.Default
     private boolean isAvailable = true;
     private Category category;
+    @ManyToOne
+    private ClientEntity clientId;
 }
